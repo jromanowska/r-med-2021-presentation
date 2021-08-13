@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Diving into registry data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Julia Romanowska" />
+    <meta name="author" content="Trond Riise" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: inverse, center, middle
+
+background-image: url(drone_logo_sm.png)
+background-size: contain
+
+# DIVING INTO REGISTRY DATA
+
+### using R for large-scale data analyses on Norwegian health registries
+
+#### Julia Romanowska
+
+UiB, IGS
+
+???
+
+- Traditional drug design
+- Unique position of Norway
+- New drug design paradigm
+- DRONE project
+    - Data
+    - Workflow
+    - Methods (in R)
+    - Example
+
+---
+
+## Drug design: research question
+
+![](chemical_vs_protein_space.jpg)
+
+&lt;p style="font-size: small; font-style: italic;"&gt;
+src: [Rifaioglu, et al. (2019). Briefings in Bioinformatics, 20(5), 1878–1912.](https://doi.org/10.1093/bib/bby061)
+&lt;/p&gt;
+
+???
+
+Drug design - how is it actually formulated as a basic research question?
+In a way it's a jigsaw puzzle - we have an enzyme, a protein inside our body
+that needs to be fixed with a certain compound, a drug. So we need to
+design this compound so that it fits the protein as good as possible.
+
+But, there's more - we don't really know which protein we need to focus on
+and it's estimated that we have more than 20k proteins. On top of that, if we
+assume that we can build a compound from scratch in any way, there can be 
+almost 100mln possibilities! Thankfully, not all of those can be used as a
+drug - we exclude some automatically based on e.g., their toxicity or
+insolubility, but up to date there are almost 10k compounds classified
+as drugs.
+
+---
+
+background-image: url(diver_old.jpg)
+background-size: 60%
+background-position: right
+
+## Traditional drug design
+
+1. _Basic research:_    
+find the protein to target
+
+2. _Computational drug design:_    
+find the best drug __candidates__
+
+3. _Experimental research:_    
+check the candidates __in vitro__ and __in vivo__
+
+4. _Clinical trials:_    
+3 phases before accepting + phase 4
+
+--
+
+**Disadvantages:**
+
+- very long time
+- billions of dollars
+- 88% of candidate drugs fail
+
+???
+
+So many drugs are already on the market, so we need to use this data!
+That's were the registries come in handy...
+
+---
+
+background-image: url(juanma-clemente-alloza-_k82HQ1OBoM-unsplash.jpg)
+background-size: 60%
+background-position: top right
+class: left, bottom
+
+
+## New paradigm:
+### drug repurposing
+
+- virtual clinical tests - _Norwegian registry data_
+- experimental confirmation in animal models
+- explore the drug targets    
+and similar drugs
+
+&lt;span style="right: 20px; font-size: small;"&gt;Photo by &lt;a href="https://unsplash.com/@juanmacllas?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText"&gt;Juanma Clemente-Alloza&lt;/a&gt; on &lt;a href="https://unsplash.com/?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText"&gt;Unsplash&lt;/a&gt;&lt;/span&gt;
+
+???
+
+- __drug repurposing__
+- no rejection due to unknown side-effects
+- many virtual confirmation tests can be done
+- confirmation of molecular action in animal models
+
+- registry-based epidemiology:
+
+  - no bias
+  - translational design
+  - agnostic search
+
+---
+
+class: left, top
+
+## DRONE =
+### Drug Repurposing
+### fOr NEurological diseases
+
+- entire prescription registry of Norway
+
+  - `&gt;`670 mln prescriptions    
+  (4.6 mln Norwegians, 2004 - 2019)
+  - `&gt;`1800 various drugs
+  - size in the memory: 105 GB
+
+- Norwegian patient registry
+
+- Statistics Norway (SSB)
+
+???
+
+- _Neurological diseases:_ PD, MS, ALS
+
+---
+
+## Workflow
+
+&lt;img style="float:center; width: 100%;" src="workflow_project_analyses_vertical.png" alt="Workflow"/&gt;
+
+&lt;br&gt;
+&lt;small&gt;
+preliminary test was published in [Mittal, S., *et al.*, **(2017)**. Science, 357(6354), 891–898.](https://doi.org/10.1126/science.aaf3934)
+&lt;/small&gt;
+
+---
+
+## Methods &amp; techniques
+
+- *internal* R-package to ease access to data
+    - `usethis` &lt;img style="width: 30px;" src="https://github.com/r-lib/usethis/raw/master/man/figures/logo.png" alt="usethis R-package logo"/&gt;
+    - custom templates for Rmarkdown reports
+    - `RSQLite` and `dbplyr` &lt;img style="width: 30px;" src="https://github.com/tidyverse/dbplyr/raw/master/man/figures/logo.png" alt="dbplyr R-package logo"/&gt;
+
+--
+
+- data visualization: *passive* and *interactive*
+    - `ggplot2` &lt;img style="width: 30px;" src="https://github.com/tidyverse/ggplot2/raw/master/man/figures/logo.png" alt="ggplot2 R-package logo"/&gt;
+    - `flexdashboard` &lt;img style="width: 30px;" src="https://github.com/rstudio/flexdashboard/raw/master/man/figures/logo.png" alt="flexdashboard R-package logo"/&gt;
+    - `plotly` &lt;img style="height: 30px;" src="https://github.com/ropensci/plotly/raw/master/man/figures/plotly.png" alt="plotly logo"/&gt;
+    - `crosstalk`
+
+--
+
+- reporting in Rmarkdown
+
+- presentations
+    - `xaringan` &lt;img style="width: 30px;" src="https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png" alt="xaingan R-package logo"/&gt; &amp; co
+
+---
+
+## Exemplary results
+
+### Analysis type:
+
+- Cox-regression
+- exposure: *min. 2 prescriptions of a drug*
+- outcome:    
+*PD diagnosis* defined as *min. 4 prescriptions of levodopa*
+- study population:    
+*entire population of Norway on 01-01-2015*
+- dataset:    
+*entire Prescription Registry* (all the prescriptions in entire Norway between 01-01-2014 and 31-12-2019)
+
+???
+
+Show them: file:///home/jro049/REPOS/DRONE-Norway-USA/vis_results/show_results_plotly_2prescr_PD-4prescr-levo.html
+and time-lag: file:///home/jro049/REPOS/DRONE-Norway-USA/vis_results/interpretation_results_Cox_regr_compare_orig-analysis_vs_time-lag_all.html
+
+---
+
+background-image: url(DRONE_ppl.png)
+background-size: 60%
+background-position: top right
+
+## The divers
+
+&lt;p style="bottom: 20px; font-size: small;"&gt;&lt;a href="http://link.uib.no/DRONE"&gt;DRONE webpage @ UiB&lt;/a&gt;&lt;/p&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
