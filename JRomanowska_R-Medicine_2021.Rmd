@@ -46,7 +46,9 @@ background-size: contain
 
 #### Julia Romanowska
 
-UiB, IGS
+University of Bergen, Norway
+
+http://link.uib.no/drone
 
 ???
 
@@ -228,11 +230,11 @@ and time-lag: file:///home/jro049/REPOS/DRONE-Norway-USA/vis_results/interpretat
 
 ---
 
-background-image: url(DRONE_ppl.png)
-background-size: 60%
-background-position: top right
+class: inverse, left, middle
 
-## The divers
+## R is for...
 
-<p style="bottom: 20px; font-size: small;"><a href="http://link.uib.no/DRONE">DRONE webpage @ UiB</a></p>
-
+### Reproducible Research
+### tRackability
+### collaboRation
+### pResentation of Results
