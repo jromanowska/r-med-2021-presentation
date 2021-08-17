@@ -210,25 +210,6 @@ preliminary test was published in [Mittal, S., *et al.*, **(2017)**. Science, 35
 
 ---
 
-## Exemplary results
-
-### Analysis type:
-
-- Cox-regression
-- exposure: *min. 2 prescriptions of a drug*
-- outcome:    
-*PD diagnosis* defined as *min. 4 prescriptions of levodopa*
-- study population:    
-*entire population of Norway on 01-01-2015*
-- dataset:    
-*entire Prescription Registry* (all the prescriptions in entire Norway between 01-01-2014 and 31-12-2019)
-
-???
-
-Show them: file:///home/jro049/REPOS/DRONE-Norway-USA/vis_results/show_results_plotly_2prescr_PD-4prescr-levo.html
-and time-lag: file:///home/jro049/REPOS/DRONE-Norway-USA/vis_results/interpretation_results_Cox_regr_compare_orig-analysis_vs_time-lag_all.html
-
----
 
 class: inverse, left, middle
 
